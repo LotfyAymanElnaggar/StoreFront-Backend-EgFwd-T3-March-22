@@ -13,7 +13,6 @@
 ### [OPTIONAL] Products by category (args: product category)
 
 > Q
-<center>
 
 <table>
 <tr>
@@ -73,7 +72,7 @@
 </tr>
 
 </table>
-</center>
+
 Resources
 
 <https://nordicapis.com/5-examples-of-excellent-api-documentation>
