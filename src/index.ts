@@ -3,7 +3,7 @@ import ip from 'ip'
 import morgan from 'morgan'
 import * as dotenv from 'dotenv'
 import routes from './routes'
-import errorMiddleware from './middlewares/error.middleware'
+import errorMiddleware from './middleware/authentication.middleware'
 
 dotenv.config()
 
