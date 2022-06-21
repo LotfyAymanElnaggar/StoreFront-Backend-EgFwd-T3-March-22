@@ -87,20 +87,21 @@ export default class UsersModel {
   }
 
   // authenticate user
-  public async authenticate(username: string, password: string): Promise<User> {
+  public async authenticate(username: string, password: string): Promise<User | null> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(`SELECT * FROM users WHERE username = $1`, [username])
       connection.release()
-      if (rows.length === 0) throw new Error('User not found')
-
-      const user = rows[0]
-      if (!bcrypt.compareSync(`${password}${process.env.BCRYPT_PASSWORD}`, user.password))
-        throw new Error('Password is incorrect')
-      delete user.password
-      return user
+      if (rows.length) {
+        const user = rows[0]
+        if (bcrypt.compareSync(`${password}${process.env.BCRYPT_PASSWORD}`, user.password)) {
+          delete user.password
+          return user
+        }
+      }
+      return null
     } catch (error) {
-      throw new Error("Couldn't authenticate user")
+      throw new Error("Couldn't authenticate user: " + (error as Error).message)
     }
   }
 }
