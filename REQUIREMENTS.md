@@ -1,80 +1,43 @@
 # API Requirements
 
-## Products
 
-### Index
+## Database Schema
 
-### Show
+### User Table Schema
 
-### Create [token required]
-
-### [OPTIONAL] Top 5 most popular products
-
-### [OPTIONAL] Products by category (args: product category)
-
-> Q
-
-<table>
-<tr>
-<td> Endpoint </td>
-<td> HTTP verb </td>
-<td> Request Body </td>
-<td> Response Body </td>
-</tr>
-<tr>
-<td> /api/login
-
-`Login`</td> <td>POST</td>
-
-<td>
-
-```json
-{
-  "username": "lotfy",
-  "password": "0123456789"
-}
+```sql
+CREATE TABLE IF NOT EXISTs users (
+    id SERIAL PRIMARY Key,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    fullname VARCHAR(50) NOT NULL
+);
 ```
 
-</td>
-
-<td>
-
- </td>
-</tr>
-
-<tr>
-<td> /api/login
-
-`Login`</td> <td>POST</td>
-
-<td>
+### Products Table Schema
 
 
-</td>
+```sql
+CREATE TABLE products(
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    price NUMERIC(5,2) NOT NULL
+);
+```
 
-<td>
-
-
- </td>
-</tr>
-
-<tr>
-<td> /api/login
-
-`Login`</td> <td>POST</td>
-
-<td>
-</td>
-
-<td>
-
- </td>
-</tr>
-
-</table>
-
-Resources
-
-<https://nordicapis.com/5-examples-of-excellent-api-documentation>
-
-<https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet>
+### Orders Table Schema
+```sql
+CREATE TABLE orders(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    status VARCHAR(255) NOT NULL
+);
+```
+### Cart Table Schema
+```sql
+CREATE TABLE cart(
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+```
