@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import * as controllers from '../controllers/users.controllers'
-import authenticationMiddleware from '../middlewares/authentication.middleware'
+import authenticationMiddleware from '../middleware/authentication.middleware'
 const routes = Router()
 
 routes
