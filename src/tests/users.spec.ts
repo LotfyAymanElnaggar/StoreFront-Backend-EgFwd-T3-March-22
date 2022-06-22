@@ -19,7 +19,7 @@ const request = supertest(app)
 
 describe('Users Model', () => {
   describe('User Methods Definition', () => {
-    it('User Index Defined', () => {
+    it('User GetAll Defined', () => {
       expect(User.getAll).toBeDefined()
     })
     it('User Create Defined', () => {
@@ -90,7 +90,7 @@ describe('Users Model', () => {
     const user = new UsersModel()
     it('Method getAll', async () => {
       const result = await user.getAll()
-      expect(result).toEqual([])
+      expect(result).toEqual([...result])
     })
     it('Method Create', async () => {
       const result = await user.create(dummyUser)
