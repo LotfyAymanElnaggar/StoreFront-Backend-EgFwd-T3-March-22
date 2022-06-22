@@ -1,5 +1,6 @@
 # API Requirements
 
+## Users End Points
 <table>
 <tr>
 <td> Endpoint </td>
@@ -207,20 +208,374 @@ No Body
 ```
  </td>
 </tr>
+</table>
+
+
+## Orders End Points
+
+<table>
+<tr>
+<td> Endpoint </td>
+<td> HTTP verb </td>
+<td> Request Body </td>
+<td> Response Body </td>
+</tr>
 
 <tr>
-<td> /api/login
+<td> /orders
 
-`Login`</td> <td>POST</td>
+`Create new orders`
+
+**token required**
+</td> <td>POST</td>
 
 <td>
+
+```json
+{
+    "status": "open",
+    "user_id": "...",
+}
+```
+
 </td>
 
 <td>
 
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 10,
+        "user_id": "5a37a0c2-96f1-436c-8fe3-daaaf78308c7",
+        "status": "open"
+    },
+    "message": "Order Fetched Successfully"
+}
+```
+
  </td>
 </tr>
 
+<tr>
+<td> /orders
+
+`Get All Orders`
+
+**token required**
+</td> <td>GET</td>
+
+<td>
+
+```
+No Body
+```
+
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 10,
+        "user_id": "5a37a0c2-96f1-436c-8fe3-daaaf78308c7",
+        "status": "open"
+    },
+    "message": "Order Created Successfully"
+}
+```
+ </td>
+</tr>
+
+<tr>
+<td> /orders/:id
+
+`Get By ID`
+
+**token required**
+</td> <td>GET</td>
+
+<td>
+
+```
+No Body
+```
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 10,
+        "user_id": "5a37a0c2-96f1-436c-8fe3-daaaf78308c7",
+        "status": "open"
+    },
+    "message": "Order Fetched Successfully"
+}
+```
+ </td>
+</tr>
+
+<tr>
+<td> /orders/cart
+
+`Update By ID`
+
+**token required**
+</td> <td>POST</td>
+
+<td>
+
+```json
+{
+    "id": 10,
+    "status": "open",
+    "user_id": "...",
+    "productInCart": [ { "pId":2, "pQ": 5 } ]
+
+}
+```
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "order_id": 10,
+        "cart": [
+            {
+                "id": 1,
+                "product_id": 2,
+                "quantity": 5
+            },
+            {
+                "id": 2,
+                "product_id": 3,
+                "quantity": 7
+            }
+        ]
+    },
+    "message": "Order Updated Successfully"
+}
+```
+ </td>
+</tr>
+
+
+<tr>
+<td> /users/:id
+
+`Delete By ID`
+
+**token required**
+</td> <td>DELETE</td>
+
+<td>
+
+```
+No Body
+```
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "test product2",
+        "price": "20.20"
+    },
+    "message": "Product Deleted Successfully"
+}
+```
+ </td>
+</tr>
+</table>
+## Products End Points
+<table>
+<tr>
+<td> Endpoint </td>
+<td> HTTP verb </td>
+<td> Request Body </td>
+<td> Response Body </td>
+</tr>
+
+<tr>
+<td> /products
+
+`Create new product`
+
+**token required**
+</td> <td>POST</td>
+
+<td>
+
+```json
+{
+  "title": "Product 1",
+  "price": 20.75,
+}
+```
+
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "Product 1",
+        "price": "20.75"
+    },
+    "message": "Product Created Successfully"
+}
+```
+
+ </td>
+</tr>
+
+<tr>
+<td> /products
+
+`Get All Products`
+
+**token required**
+</td> <td>GET</td>
+
+<td>
+
+```
+No Body
+```
+
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "products": [
+            {
+                "id": 1,
+                "title": "Product 1",
+        "price": "20.75"
+            }
+        ]
+    },
+    "message": "Products Fetched Successfully"
+}
+```
+ </td>
+</tr>
+
+<tr>
+<td> /products/:id
+
+`Get By ID`
+
+**token required**
+</td> <td>GET</td>
+
+<td>
+
+```
+No Body
+```
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "Product 1",
+        "price": "20.75"
+    },
+    "message": "Product Fetched Successfully"
+}
+```
+ </td>
+</tr>
+
+<tr>
+<td> /products/:id
+
+`Update By ID`
+
+**token required**
+</td> <td>PATCH</td>
+
+<td>
+
+```json
+{
+    "title": "test product2",
+    "price": 20.2
+}
+```
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "test product2",
+        "price": "20.20"
+    },
+    "message": "Product Updated Successfully"
+}
+```
+ </td>
+</tr>
+
+
+<tr>
+<td> /users/:id
+
+`Delete By ID`
+
+**token required**
+</td> <td>DELETE</td>
+
+<td>
+
+```
+No Body
+```
+</td>
+
+<td>
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "test product2",
+        "price": "20.20"
+    },
+    "message": "Product Deleted Successfully"
+}
+```
+ </td>
+</tr>
 </table>
 
 ## Database Schema
