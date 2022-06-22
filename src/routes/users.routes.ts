@@ -5,13 +5,13 @@ const routes = Router()
 
 routes
   .route('/')
-  .post(controllers.create)
+  .post(authenticationMiddleware, controllers.create)
   .get(authenticationMiddleware, controllers.getAll)
-  .patch(authenticationMiddleware, controllers.updateById)
 routes
   .route('/:id')
   .get(authenticationMiddleware, controllers.getById)
   .delete(authenticationMiddleware, controllers.deleteById)
+  .patch(authenticationMiddleware, controllers.updateById)
 
 routes.route('/authenticate').post(controllers.authenticate)
 export default routes

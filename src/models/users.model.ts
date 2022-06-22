@@ -9,9 +9,9 @@ const hashPassword = (password: string) => {
 }
 
 type User = {
-  id: number
-  username: string
-  fullname: string
+  id: string
+  username?: string
+  fullname?: string
   password: string
 }
 
@@ -70,16 +70,14 @@ export default class UsersModel {
     }
   }
 
-  public async update(u: User): Promise<User> {
+  public async update(id: string, u: User): Promise<User> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(
         `UPDATE users SET username = $1, fullname = $2, password = $3 WHERE id = $4 RETURNING id, username, fullname`,
-        [u.username, u.fullname, hashPassword(u.password), u.id]
+        [u.username, u.fullname, hashPassword(u.password), id]
       )
       connection.release()
-      console.log(u.id)
-
       return rows[0]
     } catch (error) {
       throw new Error("Couldn't update user")

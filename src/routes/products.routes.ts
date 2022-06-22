@@ -7,10 +7,10 @@ routes
   .route('/')
   .post(authenticationMiddleware, controllers.create)
   .get(authenticationMiddleware, controllers.getAll)
-  .patch(authenticationMiddleware, controllers.updateById)
+
 routes
   .route('/:id')
   .get(authenticationMiddleware, controllers.getById)
   .delete(authenticationMiddleware, controllers.deleteById)
-
+  .patch(authenticationMiddleware, controllers.updateById)
 export default routes

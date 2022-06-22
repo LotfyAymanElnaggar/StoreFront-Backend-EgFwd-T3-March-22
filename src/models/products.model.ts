@@ -64,12 +64,12 @@ export default class ProductsModel {
       const connection = await client.connect()
       const { rows } = await connection.query(
         `UPDATE products SET title = $1, price = $2 WHERE id = $3 RETURNING *`,
-        [p.title, p.price, id]
+        [p.title, p.price as number, id]
       )
       connection.release()
       return rows[0]
     } catch (error) {
-      throw new Error("Couldn't update product")
+      throw new Error("Couldn't update product" + error)
     }
   }
 }
