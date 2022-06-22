@@ -32,7 +32,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 // get product by id
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const product = await productModel.getById(req.params.id)
+    const product = await productModel.getById(Number(req.params.id))
     if (product)
       res.json({
         status: 'success',
@@ -51,7 +51,7 @@ export const getById = async (req: Request, res: Response, next: NextFunction) =
 
 export const deleteById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const product = await productModel.delete(req.params.id)
+    const product = await productModel.delete(Number(req.params.id))
     res.json({
       status: 'success',
       data: { ...product },
@@ -64,7 +64,7 @@ export const deleteById = async (req: Request, res: Response, next: NextFunction
 
 export const updateById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const product = await productModel.update(req.params.id, req.body)
+    const product = await productModel.update(Number(req.params.id), req.body)
     res.json({
       status: 'success',
       data: { ...product },

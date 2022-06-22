@@ -62,6 +62,40 @@ describe('Order Model', () => {
     })
   })
 
+  // Order Methods Functionality
+  describe('Order Methods Functionality', () => {
+    // test create order method with dummy data
+    it('Order Create', async () => {
+      const user = await new UsersModel().create(dummyUser)
+      dummyOrder.user_id = user.id
+      const order = await orders.create(dummyOrder)
+      dummyOrder.id = order.id
+      expect(order.status).toEqual(dummyOrder.status)
+      expect(order.user_id).toEqual(dummyOrder.user_id)
+    })
+
+    // add product to cart
+    it('Add Product to Cart', async () => {
+      const product = await new ProductsModel().create(dummyProduct)
+      dummyOrder.productInCart[0].pId = product.id
+      const productInCart = await orders.addProductToCart(dummyOrder)
+      expect(productInCart.id).toEqual(dummyOrder.productInCart[0].pId)
+    })
+
+    // update order method
+    it('Order Update', async () => {
+      dummyOrder.status = 'completed'
+      const order = await orders.update(dummyOrder.id, dummyOrder)
+      expect(order.status).toEqual('completed')
+    })
+
+    // delete order method
+    it('Order Delete', async () => {
+      const order = await orders.delete(dummyOrder.id)
+      expect(order.status).toEqual('completed')
+    })
+  })
+
   describe('Order Endpoint Accessability', () => {
     beforeAll(async () => {
       const user = new UsersModel()

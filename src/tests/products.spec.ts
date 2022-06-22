@@ -17,8 +17,10 @@ const dummyUser = {
   id: ''
 }
 
+const tokenExample = jwt.sign({ user: dummyUser }, process.env.JWT_SECRET as string)
+
 const dummyProduct = {
-  id: '',
+  id: 0,
   title: 'Title',
   price: 5.23
 }
@@ -53,9 +55,44 @@ describe('Product Model', () => {
     })
   })
 
-  describe('Product Endpoint Accessability', () => {
-    const tokenExample = jwt.sign({ user: dummyUser }, process.env.JWT_SECRET as string)
+  // Product Methods Functionality
+  describe('Product Methods Functionality', () => {
+    // test create product method with dummy data
+    it('Product Create', async () => {
+      const product = await products.create(dummyProduct)
+      expect(product.title).toEqual(dummyProduct.title)
+      expect(Number(product.price)).toEqual(dummyProduct.price)
+      dummyProduct.id = product.id
+    })
+    // test get all products method
+    it('Product GetAll', async () => {
+      const prods = await products.getAll()
+      expect(prods.length).toBeGreaterThan(0)
+    })
+    // test get product by id method
+    it('Product GetById', async () => {
+      const product = await products.getById(dummyProduct.id)
+      expect(product.title).toEqual(dummyProduct.title)
+      expect(Number(product.price)).toEqual(dummyProduct.price)
+    })
+    // test update product method
+    it('Product Update', async () => {
+      const product = await products.update(dummyProduct.id, {
+        id: dummyProduct.id,
+        title: 'New Title',
+        price: 10.23
+      })
+      expect(product.title).toEqual('New Title')
+      expect(Number(product.price)).toEqual(10.23)
+    })
+    // test delete product method
+    it('Product Delete', async () => {
+      const product = await products.delete(dummyProduct.id)
+      expect(product.id).toEqual(dummyProduct.id)
+    })
+  })
 
+  describe('Product Endpoint Accessability', () => {
     it('/products      | GET   | Should Get All Products', async () => {
       const response = await request.get('/products').set('Authorization', `Bearer ${tokenExample}`)
       expect(response.status).toBe(200)

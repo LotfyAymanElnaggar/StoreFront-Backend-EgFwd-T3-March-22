@@ -39,7 +39,7 @@ export default class OrderModel {
   }
 
   // Get order by id
-  public async getById(id: string): Promise<Order | null> {
+  public async getById(id: number): Promise<Order | null> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(`SELECT * FROM orders WHERE id = $1`, [id])
@@ -52,7 +52,7 @@ export default class OrderModel {
   }
 
   // Delete order
-  public async delete(id: string): Promise<Order> {
+  public async delete(id: number): Promise<Order> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(`DELETE FROM orders WHERE id = $1 RETURNING *`, [id])
@@ -64,7 +64,7 @@ export default class OrderModel {
   }
 
   // Update order
-  public async update(id: string, order: Order): Promise<Order> {
+  public async update(id: number, order: Order): Promise<Order> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(

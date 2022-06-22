@@ -34,19 +34,18 @@ export default class ProductsModel {
     }
   }
 
-  public async getById(id: string): Promise<Product | null> {
+  public async getById(id: number): Promise<Product> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(`SELECT * FROM products WHERE id = $1`, [id])
       connection.release()
-      if (rows.length) return rows[0]
-      return null
+      return rows[0]
     } catch (error) {
       throw new Error("Couldn't get product")
     }
   }
 
-  public async delete(id: string): Promise<Product> {
+  public async delete(id: number): Promise<Product> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(`DELETE FROM products WHERE id = $1 RETURNING *`, [
@@ -59,7 +58,7 @@ export default class ProductsModel {
     }
   }
 
-  public async update(id: string, p: Product): Promise<Product> {
+  public async update(id: number, p: Product): Promise<Product> {
     try {
       const connection = await client.connect()
       const { rows } = await connection.query(

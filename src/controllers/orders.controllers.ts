@@ -31,7 +31,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const order = await orderModel.getById(req.params.id)
+    const order = await orderModel.getById(Number(req.params.id))
     if (order)
       res.json({
         status: 'success',
@@ -50,7 +50,7 @@ export const getById = async (req: Request, res: Response, next: NextFunction) =
 
 export const deleteById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const order = await orderModel.delete(req.params.id)
+    const order = await orderModel.delete(Number(req.params.id))
     res.json({
       status: 'success',
       data: { ...order },
@@ -64,7 +64,7 @@ export const deleteById = async (req: Request, res: Response, next: NextFunction
 // Update order
 export const updateById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const order = await orderModel.update(req.params.id, req.body)
+    const order = await orderModel.update(Number(req.params.ip), req.body)
     res.json({
       status: 'success',
       data: { ...order },
