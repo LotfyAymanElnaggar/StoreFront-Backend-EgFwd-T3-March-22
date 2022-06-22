@@ -39,7 +39,7 @@ export const getById = async (req: Request, res: Response, next: NextFunction) =
     const user = await userModel.getById(req.params.id)
     res.json({
       status: 'success',
-      data: { ...user },
+      data: user,
       message: 'User Fetched Successfully'
     })
   } catch (error) {
@@ -64,7 +64,7 @@ export const deleteById = async (req: Request, res: Response, next: NextFunction
 // update user by id
 export const updateById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await userModel.update(req.body)
+    const user = await userModel.update(req.params.id, req.body)
     res.json({
       status: 'success',
       data: { ...user },
