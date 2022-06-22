@@ -24,6 +24,21 @@ SALT_ROUND=
 # JWT
 JWT_SECRET=
 ```
+- DB Configurations
+
+We shall create the dev and test database.
+
+```sql
+psql -U postgres
+CREATE USER store_db_user WITH PASSWORD 'password123';
+CREATE DATABASE store;
+CREATE DATABASE store_test;
+\c store
+GRANT ALL PRIVILEGES ON DATABASE store TO storeDB;
+\c store_test
+GRANT ALL PRIVILEGES ON DATABASE store_test TO storeDB;
+```
+
 - db-migrate up
 - npm run dev
 
